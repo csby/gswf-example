@@ -35,6 +35,7 @@ func init() {
 	cfg.Module.Remark = moduleRemark
 	cfg.Module.Path = moduleArgs.ModulePath()
 	cfg.Svc.BootTime = now
+	cfg.Node.InstanceId = gtype.NewGuid()
 
 	rootFolder := filepath.Dir(moduleArgs.ModuleFolder())
 	cfgFolder := filepath.Join(rootFolder, "cfg")
@@ -70,6 +71,10 @@ func init() {
 			fmt.Println("load configure file fail: ", err)
 		}
 	}
+	cfg.Path = cfgPath
+	cfg.Load = cfg.DoLoad
+	cfg.Save = cfg.DoSave
+	cfg.InitId()
 
 	// init certificate
 	if cfg.Https.Enabled {
